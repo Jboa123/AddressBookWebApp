@@ -1,0 +1,36 @@
+<h2>Add new person</h2>
+
+
+<form [formGroup]="NewAddressForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label>First Name:</label>
+    <input type="text" class="form-control" formControlName="firstName" [class.is-invalid]="!FirstNameIsValid" />
+    <small class="text-danger" [class.d-none]="FirstNameIsValid" >First name is required</small>
+  </div>
+
+  <div class="form-group">
+    <label>Last Name:</label>
+    <input type="text" class="form-control" formControlName="lastName" [class.is-invalid]="!LastNameIsValid"/>
+    <small class="text-danger" [class.d-none]="LastNameIsValid" >Last name is required</small>
+  </div>
+
+  <div class="form-group">
+    <label>Email:</label>
+    <input type="email" class="form-control" formControlName="email" [class.is-invalid]="!EmailIsValid" />
+    <div *ngIf="!EmailIsValid">
+      <small *ngIf="Email.errors?.required" class="text-danger">Email is required</small>
+      <small *ngIf="Email.errors?.email" class="text-danger">Email is not valid</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Phone Number:</label>
+    <input type="tel" class="form-control" formControlName="phone"/>
+    <small class="text-danger"></small>
+  </div>
+
+  <button [disabled]="!NewAddressForm.valid"class="btn btn-primary" type="submit">Save Contact Details</button>
+
+</form>
+
