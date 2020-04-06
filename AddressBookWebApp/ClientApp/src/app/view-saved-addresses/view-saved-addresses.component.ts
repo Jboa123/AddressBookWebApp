@@ -15,9 +15,9 @@ export class ViewSavedAddressesComponent implements OnInit {
   constructor(private _addressService: AddressService) {}
 
   ngOnInit() {
-    this.Headers = ["First Name", "Last Name", "email", "phone"];
+    this.Headers = ["First Name", "Last Name", "Email", "Phone"];
     this.PeopleProperties = ["firstName", "lastName", "email", "phone"];
-    this._addressService.PeopleInitialised.subscribe( () => this.People = this._addressService.VisiblePeople)
+    this._addressService.VisiblePeopleModified.subscribe( () => this.People = this._addressService.VisiblePeople)
   }
 
 }

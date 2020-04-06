@@ -6,9 +6,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AddressService {
 
-  private SplitNamePeople: SplitNamePerson[];
+  public SplitNamePeople: SplitNamePerson[];
   public VisiblePeople: SplitNamePerson[];
-  public PeopleInitialised: EventEmitter<any> = new EventEmitter();
+  public VisiblePeopleModified: EventEmitter<any> = new EventEmitter();
   private AddressControllerUrl: string;
   constructor(private _http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.AddressControllerUrl = baseUrl + "PersonAddress";
@@ -40,7 +40,7 @@ export class AddressService {
         this.SplitNamePeople = result;
         this.VisiblePeople = result;
       }, error => console.log(error), () => {
-          this.PeopleInitialised.emit();
+          this.VisiblePeopleModified.emit();
       })
   }
 
