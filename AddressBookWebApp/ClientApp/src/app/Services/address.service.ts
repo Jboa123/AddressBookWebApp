@@ -1,5 +1,7 @@
 import { Injectable, Inject, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { error } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +31,7 @@ export class AddressService {
 
     this._http.post<any>(this.AddressControllerUrl, userData).subscribe(
         response => console.log("Success!", response),
-        error => console.error("Error", error)
+        error => this.handleError(error)
     );
   }
 
@@ -39,7 +41,7 @@ export class AddressService {
       this._http.get<SplitNamePerson[]>(this.AddressControllerUrl).subscribe(result => {
         this.SplitNamePeople = result;
         this.VisiblePeople = result;
-      }, error => console.log(error), () => {
+      }, error => this.handleError(error), () => {
           this.VisiblePeopleModified.emit();
       })
   }
@@ -47,6 +49,15 @@ export class AddressService {
   private CapitaliseNames(splitNamePerson: SplitNamePerson) {
     splitNamePerson.lastName = splitNamePerson.lastName[0].toUpperCase() + splitNamePerson.lastName.slice(1);
     splitNamePerson.firstName = splitNamePerson.firstName[0].toUpperCase() + splitNamePerson.firstName.slice(1);
+  }
+
+  private handleError(errorResponse: HttpErrorResponse) {
+    if (errorResponse.error instanceof ErrorEvent) {
+
+    } else {
+      console.log(errorResponse.message);
+    }
+
   }
 
 }
