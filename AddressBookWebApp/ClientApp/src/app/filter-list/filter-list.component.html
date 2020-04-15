@@ -1,3 +1,4 @@
 <h5>Search people</h5>
 
-<input class="col-sm-4" type="text" [ngModel]="UserFilter" (ngModelChange)="FilterPeople($event)" />
+<input class="col-sm-4" type="text" [(ngModel)]="UserSearch" (ngModelChange)="FilterPeople()"/>
+

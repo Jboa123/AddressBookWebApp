@@ -11,24 +11,27 @@ import { AddressService } from '../Services/address.service';
 })
 export class AddPersonComponent implements OnInit {
 
-  constructor(private FormBuilder: FormBuilder, private _saveAddressService: AddressService) { }
+  constructor(private FormBuilder: FormBuilder, private _AddressService: AddressService) { }
+
+  private SaveHasFailed = false;
 
   ngOnInit() {
+    this._AddressService.SaveFailedEmtitter.subscribe(event => this.SaveHasFailed = event)
   }
 
   NewAddressForm = this.FormBuilder.group(
     {
-      firstName: ["", Validators.required],
-      lastName: ["", Validators.required],
+    firstName: ["", Validators.required],
+    lastName: ["", Validators.required],
       email: ["", [Validators.email, Validators.required]],
       phone: [""]
     }
   );
 
   /*Called when the Save Contact Details button is clicked.*/
-  public onSubmit()
+  public async onSubmit()
   {
-    this._saveAddressService.SaveAddress(this.NewAddressForm.value)
+    this._AddressService.SaveAddress(this.NewAddressForm.value)
   }
 
   get FirstNameIsValid()  {

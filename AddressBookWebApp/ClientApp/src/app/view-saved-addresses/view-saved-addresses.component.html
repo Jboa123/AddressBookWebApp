@@ -1,14 +1,23 @@
 <table class="table table-striped table-hover table-bordered">
 
+
   <tr>
     <th *ngFor="let column of Headers">
       {{column}}
     </th>
+    <th>
+    Delete
+    </th>
   </tr>
 
-  <tr *ngFor="let row of People">
+  <tr *ngFor="let row of People; let j-index">
     <td *ngFor="let column of PeopleProperties">
       {{row[column]}}
+    </td>
+    <td>
+      <span>
+        <button class="btn btn-sm text-white btn-danger" (click)="Delete(row)">Delete</button>
+      </span>
     </td>
   </tr>
 

@@ -15,5 +15,10 @@ namespace AddressBookLibrary
         {
             return "dbo.LoadPeopleAddresses";
         }
+
+        public static string DeletePerson()
+        {
+            return "dbo.DeletePerson @Email";
+        }
     }
 }

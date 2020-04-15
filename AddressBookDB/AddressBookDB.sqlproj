@@ -66,6 +66,7 @@
     <PostDeploy Include="PostDeploymentScripts\AddDummyData.sql" />
     <Build Include="StoredProceedures\SavePersonAddress.sql" />
     <Build Include="StoredProceedures\LoadPeopleAddresses.sql" />
+    <Build Include="StoredProceedures\DeletePerson.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="AddressBookDB.refactorlog" />

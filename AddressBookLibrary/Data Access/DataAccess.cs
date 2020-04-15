@@ -38,5 +38,14 @@ namespace AddressBookLibrary
             }
             return People;
         }
+
+        public void DeleteData<T>(string sqlProceedure, T data)
+        {
+            List<T> People = new List<T>();
+            using (IDbConnection cnn = new SqlConnection(cnnString))
+            {
+                cnn.Execute(sqlProceedure, data);
+            }
+        }
     }
 }

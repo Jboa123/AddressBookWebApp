@@ -16,34 +16,49 @@ namespace AddressBookLibrary.Controllers
 
         private readonly DataAccess _dataAccess;
         private readonly ILogger<PersonAddressController> _logger;
-        public List<PersonAddressModel> People { get; set; }
+        
         public PersonAddressController(ILogger<PersonAddressController> logger, DataAccess DA)
         {
             _dataAccess = DA;
             _logger = logger;
-            People = _dataAccess.LoadData<PersonAddressModel>(SQLProceedures.LoadPeopleAddresses());
         }
 
         [HttpGet]
         public IEnumerable<PersonAddressModel> GetPeopleAddresses()
         {
-            return this.People.ToArray();
+            return _dataAccess.LoadData<PersonAddressModel>(SQLProceedures.LoadPeopleAddresses());
         }
            
         [HttpPost]
         public void SavePerson (PersonAddressModel person)
         {
-            DoesEmailExist(person);
+            CheckDataValidity(person);
             _dataAccess.SaveData(SQLProceedures.SavePersonAddress() ,person);
         }
 
-        private void DoesEmailExist(PersonAddressModel newPerson)
+        [HttpDelete]
+        [Route("{Email?}")]
+        public void DeletePersonFromDB(string email)
         {
-            foreach(PersonAddressModel savedPerson in this.People)
+           _dataAccess.DeleteData(SQLProceedures.DeletePerson(), new { Email = email });
+        }
+
+        private void CheckDataValidity(PersonAddressModel newPerson)
+        {
+            List<PersonAddressModel> savedPeople = _dataAccess.LoadData<PersonAddressModel>(SQLProceedures.LoadPeopleAddresses());
+            foreach (PersonAddressModel savedPerson in savedPeople)
             {
+                if (newPerson.FirstName == "")
+                {
+                    throw new Exception("First name is required");
+                }
+                if(newPerson.LastName == "")
+                {
+                    throw new Exception("Last name is required");
+                }
                 if(savedPerson.Email == newPerson.Email)
                 {
-                    throw new Exception("Email already exists");
+                    throw new Exception("Email already exists", null);
                 }
             }
         }
