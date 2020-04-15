@@ -30,7 +30,6 @@ export class AddressService {
     this._http.post<any>(this.AddressControllerUrl, userData).subscribe(
       response => {
         this.AllPeople.push(userData);
-        console.log("allpep");
       this.AllPeople.sort((p1, p2) => {
         if (p1.lastName > p2.lastName) { return 1 };
         if (p1.lastName < p2.lastName) { return -1 };
@@ -46,7 +45,7 @@ export class AddressService {
       })
   }
 
-  //remove a given person from the Database, the AllPeople array and VisiblePeopleArray.
+  //Remove a given person from the Database, the AllPeople array and VisiblePeopleArray.
   public DeletePerson(person: SplitNamePerson) {
     this._http.delete<any>(this.AddressControllerUrl + "/" + person.email).subscribe((ok) => {
       var personIndex = this.AllPeople.indexOf(person);
@@ -70,7 +69,7 @@ export class AddressService {
         }
       )
   }
-
+  //Email to lower case. First letter of both names capatalised
   private FormatUserData(splitNamePerson: SplitNamePerson) {
     if (splitNamePerson.lastName && splitNamePerson.firstName && splitNamePerson.email) {
       splitNamePerson.lastName = splitNamePerson.lastName[0].toUpperCase() + splitNamePerson.lastName.slice(1);
