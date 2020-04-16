@@ -43,6 +43,10 @@ namespace AddressBookLibrary.Controllers
            _dataAccess.DeleteData(SQLProceedures.DeletePerson(), new { Email = email });
         }
 
+        /// <summary>
+        /// FirstName, LastName and Email must have a value. Email must not exist already.
+        /// </summary>
+        /// <param name="newPerson"></param>
         private void CheckDataValidity(PersonAddressModel newPerson)
         {
             List<PersonAddressModel> savedPeople = _dataAccess.LoadData<PersonAddressModel>(SQLProceedures.LoadPeopleAddresses());
@@ -56,7 +60,7 @@ namespace AddressBookLibrary.Controllers
                 {
                     throw new Exception("Last name is required");
                 }
-                if(savedPerson.Email == newPerson.Email)
+                if(savedPerson.Email == ""|| savedPerson.Email == newPerson.Email)
                 {
                     throw new Exception("Email already exists", null);
                 }
