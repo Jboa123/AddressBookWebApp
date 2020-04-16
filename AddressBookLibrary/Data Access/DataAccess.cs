@@ -16,7 +16,7 @@ namespace AddressBookLibrary
 
         public DataAccess(IConfiguration configuration)
         {
-           cnnString = configuration.GetConnectionString("LocalSqlCnn");
+           cnnString = configuration.GetConnectionString("DefaultConnection");
         }
 
 
